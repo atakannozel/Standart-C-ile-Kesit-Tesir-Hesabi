@@ -1,0 +1,266 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void belli_noktadan_yuklu_mesnet_tepki();
+void ortadan_yuklu_mesnet_tepki();
+
+int main()
+    {
+          int menusecim ;
+          printf("\n \nKesit tesir hesabi programina hosgeldiniz!\n");
+          printf("\nLutfen yapmak istediginiz islem icin belirtilen degeri yazip Enter tusuna basin.\n");
+          printf("Secilen belirli bir noktasindan yuklemeye tabii olan kirisin mesnet tepkileri icin : 1\n");
+          printf("Ortasindan yuklemeye tabii olan kirisin mesnet tepkileri icin : 2\n\n");
+          secimasamasi:
+          scanf("%d", &menusecim);
+          printf("\n\n" );
+          
+          switch(menusecim)
+          {
+           case 1 : belli_noktadan_yuklu_mesnet_tepki();
+           break;
+           case 2 : ortadan_yuklu_mesnet_tepki();
+           break;
+           default :
+         printf("Belirttiginiz numara menude yok! Tekrar deneyin. \n" );
+         goto secimasamasi; 
+          }
+                
+    system("PAUSE");
+    }
+
+
+void belli_noktadan_yuklu_mesnet_tepki()
+
+     {
+	float uzunluk;
+	float yukleme;
+	float uzaklik;
+	float Faz;
+	float Fay;
+	float Fbz;
+	float Fby;
+	float Fk1;
+	float Fk2;
+	float Me1;
+	float Me2;
+	int secim;
+	int devam;
+	float Z1, Z2; //yerine ne yazılacağını bulunca silebiliriz ya da Z = bişey bişey deriz
+	printf("Belirli bir noktasindan yuklenmis kiris icin mesnet tepki hesabi secildi. \n ");
+	ilkasama:
+	printf("\n Sistem asagida gorsellestirilmistir: \n \n");
+	
+
+		printf("   |+y        v F     \n");
+		printf("   |---------------------\n");
+		printf("   ||///////////////////|\n");
+		printf("   |---------------------\n");
+		printf("   |A                    B\n");
+		printf("   |_____________________________+z\n\n");
+		printf("    A noktasi (0,0) noktasidir. \n\n");
+		printf("    Serbest Cisim Diyagrami\n\n");
+		printf("              v F          \n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay              Fby^\n\n\n" );
+	ikinciasama:
+	printf("Kirisin uzunlugunu metre cinsinden belirtiniz:");
+	scanf("%f",&uzunluk);
+	printf("Newton cinsinden yuklemenin siddetini belirtiniz:");
+	scanf("%f",&yukleme);
+	printf("Yuklemenin A noktasina olan uzakligini metre cinsinden belirtiniz:");
+	scanf("%f",&uzaklik);
+		if (uzaklik > uzunluk)
+	{printf("\n Hata: Kuvvet icin belirtilen z degeri kiris uzunlugundan fazla! \n\n");
+	goto ikinciasama;
+	}
+	printf("\n Yuklemenin yonunu belirtiniz (-y yonunde ise:1 +y yonunde ise:2 ): \n \n");
+	scanf("%d",&secim);
+	
+
+	if ( secim == 1 ) 
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("              v F=%.3f     \n",yukleme);
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A                    B\n \n \n \n ");
+		printf("    Serbest Cisim Diyagrami\n");
+		printf("              v %.3fN          \n",yukleme);
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay              Fby^\n" );
+		Fay = yukleme - yukleme*uzaklik/uzunluk;
+		Fby = yukleme*uzaklik/uzunluk;
+		Z1  = uzaklik;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = yukleme*(Z2 - uzaklik) - Fay*Z2;
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Eğilme Momentleri:\n");
+		printf("Me1= %.3f N\n",Me1);
+		printf("Me2= %.3f N\n",Me2);	
+	}
+	else
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A          ^ F=%.3f   B\n \n \n \n",yukleme);
+		printf("    Serbest Cisim Diyagrami\n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay    %.3fN^      Fby^\n",yukleme);
+		Fay = yukleme - yukleme*uzaklik/uzunluk;
+		Fby = yukleme*uzaklik/uzunluk;
+		Z1  = uzaklik;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme + Fay;
+		Me2 = -yukleme*(Z2 - uzaklik) - Fay*Z2;
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Eğilme Momentleri:\n");
+		printf("Me1= %.3f N\n",Me1);
+		printf("Me2= %.3f N\n",Me2);
+	}
+	
+	printf("\nAyni islemi tekrar yapmak icin 1, \n");
+	printf("Ana menuye donmek icin 2 tusuna basin. \n");
+	printf("Programi kapatmak icin 3 tusuna basin. \n"); // 3 tusu hic bir seye bagli degil; ama donguyu devam ettirdigi icin calisiyor ;)
+	scanf("%d",&secim);
+	if (secim == 1) { goto ilkasama; } //2 tusu icin bir if command'i hazirlanmali
+  //cok denedim baktım ama 2 yazında en basa atıcak bir şey yazamadım goto secimasamasi yapamayız
+	
+	system("PAUSE");
+     }
+     
+     
+ void ortadan_yuklu_mesnet_tepki()
+ 
+      {
+    float yukleme;
+    float uzunluk;
+	int secim;
+	int devam;
+	float Faz;
+	float Fay;
+	float Fbz;
+	float Fby;
+	float Fk1;
+	float Fk2;
+	float Me1;
+	float Me2;
+	float Z1,Z2;
+	printf("Ortasindan yuklenmis kiris icin mesnet tepki hesabi secildi. \n \n ");
+	ilkasama:
+	printf("Sistem asagida gorsellestirilmistir: \n \n");
+	
+
+		printf("   |+y        v F     \n");
+		printf("   |---------------------\n");
+		printf("   ||///////////////////|\n");
+		printf("   |---------------------\n");
+		printf("   |A                    B\n");
+		printf("   |_____________________________+z\n\n\n");
+		printf("    Serbest Cisim Diyagrami\n\n");
+		printf("              v F          \n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay              Fby^\n\n\n" );
+	
+	printf("Kirisin uzunlugunu belirtiniz:");	//kiris uzunluğu gerekli ya
+	scanf("%f",&uzunluk);
+	printf("Newton cinsinden yuklemenin siddetini belirtiniz:");
+	scanf("%f",&yukleme);
+	printf("\n Yuklemenin yonunu belirtiniz (-y yonunde ise:1 +y yonunde ise:2 ): \n \n");
+	scanf("%d",&secim);
+	if ( secim == 1 ) 
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("              v F=%.3f     \n",yukleme);
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A                    B\n \n \n \n ");
+		printf("    Serbest Cisim Diyagrami\n");
+		printf("              v %.3fN          \n",yukleme);
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay              Fby^\n" );
+		Fay = yukleme/2;
+		Fby = yukleme/2;
+		Z1  = uzunluk/2;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme - Fay;
+		Me2 = -yukleme*(Z2-uzunluk/2) + Fay*Z2;
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N\n",Fay );
+		printf("Fby = %.3f N\n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Eğilme Momentleri:\n");
+		printf("Me1= %.3f N\n",Me1);
+		printf("Me2= %.3f N\n",Me2);
+
+		
+		
+	}
+	else
+	{
+		printf("    Kirisin gorunumu\n \n");
+		printf("    ---------------------\n");
+		printf("    |///////////////////|\n");
+		printf("    ---------------------\n");
+		printf("    A          ^ F=%.3f   B\n \n \n \n",yukleme);
+		printf("    Serbest Cisim Diyagrami\n");
+		printf("Faz>----------------------<Fbz\n");
+		printf("    ^Fay    %.3f N^      Fby^\n",yukleme);
+		Fay = yukleme/2;
+		Fby = yukleme/2;
+		Z1  = uzunluk/2;
+		Z2  = uzunluk;
+		Fk1 = Fay;
+		Me1 = Fay*Z1;
+		Fk2 = yukleme + Fay;
+		Me2 = -yukleme*(Z2 - uzunluk/2) - Fay*Z2;
+		printf("Faz = 0 \n" );
+		printf("Fbz = 0 \n" );
+		printf("Fay = %.3f N \n",Fay);
+		printf("Fby = %.3f N \n",Fby );
+		printf("Kesme Gerilmeleri:\n");
+		printf("Fk1= %.3f N\n",Fk1);
+		printf("Fk2= %.3f N\n",Fk2);
+		printf("Eğilme Momentleri:\n");
+		printf("Me1= %.3f N\n",Me1);
+		printf("Me2= %.3f N\n",Me2);
+		
+	}
+	
+	printf("\nAyni islemi tekrar yapmak icin 1, \n");
+	printf("Ana menuye donmek icin 2 tusuna basin. \n");
+	printf("Programi kapatmak icin 3 tusuna basin. \n"); // 3 tusu hic bir seye bagli degil; ama donguyu devam ettirdigi icin calisiyor ;)
+	scanf("%d",&secim);
+	if (secim == 1) { goto ilkasama; } //2 tusu icin bir if command'i hazirlanmali
+	
+
+	system("PAUSE");
+
+}
